@@ -1,0 +1,7 @@
+body { 
+    background: linear-gradient(to right, rgb(181, 53, 53), rgb(138, 47, 138));
+}
+
+.col-md-4 {
+    padding-top: 15px;
+}
