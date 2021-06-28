@@ -5,3 +5,7 @@ body {
 .col-md-4 {
     padding-top: 15px;
 }
+
+.msg {
+    font-weight: bold;
+}
