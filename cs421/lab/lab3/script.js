@@ -40,8 +40,8 @@ function LbsToKg() {
     } else if (input < 1) {
         msg.text("Provide a weight greater than 0!");
     } else { 
-        let lbs = (input / 2.205);
-        result.val(lbs.toFixed(2));
+        let kg = (input / 2.205);
+        result.val(kg.toFixed(2));
     }
 }
 
@@ -78,8 +78,8 @@ function MilesToKm() {
     } else if (input < 1) {
         msg.text("Provide a distance greater than 0!");
     } else { 
-        let mi = (input * 1.609);
-        result.val(mi.toFixed(2));
+        let km = (input * 1.609);
+        result.val(km.toFixed(2));
     }
 }
 
@@ -112,7 +112,7 @@ function CToF() {
     if (input === "" || isNaN(input)) {
         msg.text("Provide a valid temperature!");
     } else { 
-        let c = (input * 9/5) + 32;
-        result.val(c.toFixed(2));
+        let f = (input * 9/5) + 32;
+        result.val(f.toFixed(2));
     }
 }
