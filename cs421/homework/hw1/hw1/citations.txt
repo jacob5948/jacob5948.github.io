@@ -1,2 +1,0 @@
-Citation 1 - Used to implement a PDF viewer in resume.html
-https://stackoverflow.com/questions/14081128/how-to-embed-a-pdf-viewer-in-a-page
