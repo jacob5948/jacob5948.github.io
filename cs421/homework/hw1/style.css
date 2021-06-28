@@ -1,0 +1,60 @@
+body {
+    --primary: #028308;
+    --secondary: #028309a9;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;;
+    text-align: center;
+    background-color: #0283082a;
+}
+
+.navbar {
+    background-color: var(--secondary);
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.navbar a {
+    border-radius: 15px;
+    text-decoration: none;
+    padding: 15px;
+    color: white;
+}
+
+.navbar a:hover {
+    background-color: var(--primary);
+}
+
+.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+.content {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    color: black;
+}
+
+.content p {
+    width: 500px;
+    margin: 15px auto;
+}
+
+.socials img {
+    width: 45px;
+}
+
+.portfolio {
+    text-align: center;
+}
+
+.portfolio table {
+    margin: auto;
+}
+
+.portfolio img {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+}
