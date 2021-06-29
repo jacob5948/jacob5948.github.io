@@ -11,6 +11,7 @@ function appleCallback(data) {
 
     let podcastName = results.shift().collectionName
     $('#podcast_title').text(podcastName)
+    document.title = podcastName
 
     results.forEach(result => {
         console.log(result)
