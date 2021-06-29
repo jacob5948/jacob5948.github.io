@@ -40,3 +40,41 @@
     "Podcasts"
   ]
 }
+
+
+{
+    "episodeUrl": "https://chtbl.com/track/42D75/traffic.megaphone.fm/CAD9998539728.mp3",
+    "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/22/45/42/2245420a-2a8d-fa5a-3684-31ba7b423408/mza_9740855816130231243.jpg/160x160bb.jpg",
+    "episodeFileExtension": "mp3",
+    "episodeContentType": "audio",
+    "previewUrl": "https://chtbl.com/track/42D75/traffic.megaphone.fm/CAD9998539728.mp3",
+    "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/22/45/42/2245420a-2a8d-fa5a-3684-31ba7b423408/mza_9740855816130231243.jpg/60x60bb.jpg",
+    "artistViewUrl": "https://itunes.apple.com/us/artist/mythical-ramble/1436641505?mt=2&uo=4",
+    "contentAdvisoryRating": "Clean",
+    "trackViewUrl": "https://podcasts.apple.com/us/podcast/the-best-advice-weve-ever-received-ear-biscuits-ep-247/id717407884?i=1000480120286&uo=4",
+    "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/22/45/42/2245420a-2a8d-fa5a-3684-31ba7b423408/mza_9740855816130231243.jpg/600x600bb.jpg",
+    "collectionViewUrl": "https://itunes.apple.com/us/podcast/ear-biscuits/id717407884?mt=2&uo=4",
+    "trackTimeMillis": 4133000,
+    "artistIds": [
+      1436641505
+    ],
+    "closedCaptioning": "none",
+    "trackId": 1000480120286,
+    "trackName": "The Best Advice We've Ever Received | Ear Biscuits Ep.247",
+    "releaseDate": "2020-06-29T10:00:00Z",
+    "shortDescription": "",
+    "collectionId": 717407884,
+    "collectionName": "Ear Biscuits",
+    "feedUrl": "http://feeds.feedburner.com/ear-biscuits",
+    "country": "USA",
+    "kind": "podcast-episode",
+    "wrapperType": "podcastEpisode",
+    "genres": [
+      {
+        "name": "Comedy",
+        "id": "1303"
+      }
+    ],
+    "episodeGuid": "05be2ab0-84d7-11ea-bce9-1ffb04fa0e4b",
+    "description": "Just stop and sonder. R&L reflect on some of the best advice that they've received, how it's impacted them, and other invaluable advice shared by listeners on this episode of Ear Biscuits!\nLearn more about your ad choices. Visit podcastchoices.com/adchoices"
+  }

@@ -1,35 +1,34 @@
 window.onload = () => {
-    $('#search_btn').click(() => {
-        let term = $('#search_term').val()
-        if (!(term == '')) {
-            search({"term": term, "entity": "podcast"})
-        }
-    })
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    lookup({'id':id, 'media':'podcast', 'entity':'podcastEpisode'})
 }
 
 function appleCallback(data) {
     console.log(data)
     let results = data.results
-
     $(".card-body").empty()
+
+    let podcastName = results.shift().collectionName
+    $('#podcast_title').text(podcastName)
 
     results.forEach(result => {
         console.log(result)
-        artist = result.artistName
-        podcast = result.collectionName
-        picture = result.artworkUrl100 ? result.artworkUrl100 : "https://via.placeholder.com/150/000000/FFFFFF/?text=Noimagefound"
+        releaseDate = new Date(result.releaseDate).toLocaleDateString('en-us')
+        title = result.trackName
+        picture = result.artworkUrl160 ? result.artworkUrl160 : "https://via.placeholder.com/150/000000/FFFFFF/?text=Noimagefound"
         id = result.collectionId
         html = 
 `<div class="row my-2">
     <div class="col-auto">
-        <a href="episodes.html?id=${id}"><img src="${picture}" height="100px" width="100px"></a>
+        <img src="${picture}" height="100px" width="100px">
     </div>
     <div class="col-10">
         <div class="row">
-            <h2 style="white-space: nowrap;">${podcast}</h2>
+            <h2 style="white-space: nowrap;">${title}</h2>
         </div>
         <div class="row">
-            <h4 style="white-space: nowrap;">${artist}</h4>
+            <h4 style="white-space: nowrap;">${releaseDate}</h4>
         </div>
     </div>
 </div>`
