@@ -1,0 +1,42 @@
+{
+  "wrapperType": "track",
+  "kind": "podcast",
+  "artistId": 1436641505,
+  "collectionId": 717407884,
+  "trackId": 717407884,
+  "artistName": "Mythical & Ramble",
+  "collectionName": "Ear Biscuits",
+  "trackName": "Ear Biscuits",
+  "collectionCensoredName": "Ear Biscuits",
+  "trackCensoredName": "Ear Biscuits",
+  "artistViewUrl": "https://podcasts.apple.com/us/artist/ramble/1436641505?uo=4",
+  "collectionViewUrl": "https://podcasts.apple.com/us/podcast/ear-biscuits/id717407884?uo=4",
+  "feedUrl": "http://feeds.feedburner.com/ear-biscuits",
+  "trackViewUrl": "https://podcasts.apple.com/us/podcast/ear-biscuits/id717407884?uo=4",
+  "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/22/45/42/2245420a-2a8d-fa5a-3684-31ba7b423408/mza_9740855816130231243.jpg/30x30bb.jpg",
+  "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/22/45/42/2245420a-2a8d-fa5a-3684-31ba7b423408/mza_9740855816130231243.jpg/60x60bb.jpg",
+  "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/22/45/42/2245420a-2a8d-fa5a-3684-31ba7b423408/mza_9740855816130231243.jpg/100x100bb.jpg",
+  "collectionPrice": 0,
+  "trackPrice": 0,
+  "trackRentalPrice": 0,
+  "collectionHdPrice": 0,
+  "trackHdPrice": 0,
+  "trackHdRentalPrice": 0,
+  "releaseDate": "2021-06-28T10:00:00Z",
+  "collectionExplicitness": "cleaned",
+  "trackExplicitness": "cleaned",
+  "trackCount": 295,
+  "country": "USA",
+  "currency": "USD",
+  "primaryGenreName": "Comedy",
+  "contentAdvisoryRating": "Clean",
+  "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/22/45/42/2245420a-2a8d-fa5a-3684-31ba7b423408/mza_9740855816130231243.jpg/600x600bb.jpg",
+  "genreIds": [
+    "1303",
+    "26"
+  ],
+  "genres": [
+    "Comedy",
+    "Podcasts"
+  ]
+}
