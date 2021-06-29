@@ -2,9 +2,6 @@ var results = []
 var currentStart = 0
 
 window.onload = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-
     $("#next_button").click(() => {
         $(".card-body").animate({ scrollTop: 0 }, "fast");
         if (currentStart < results.length + 1) {
@@ -27,14 +24,18 @@ window.onload = () => {
         }   
     })
 
-    lookup({'id':id, 'media':'podcast', 'entity':'podcastEpisode', 'limit':5000})
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    
+    //limit only goes up to 200 :/ no way to get more
+    lookup({'id':id, 'media':'podcast', 'entity':'podcastEpisode', 'limit': 200})
     $("#more_button").css('display','initial')
 }
 
 function appleCallback(data) {
     //console.log(data)
     results = data.results
-    //console.log(results)
+    console.log(results)
     loadEpisodes(results.slice(currentStart, currentStart+11))
 }
 
