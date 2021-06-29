@@ -23,12 +23,12 @@ function appleCallback(data) {
     <div class="col-auto">
         <img src="${picture}" height="100px" width="100px">
     </div>
-    <div class="col-auto">
+    <div class="col-10">
         <div class="row">
-            <h2>${podcast}</h2>
+            <h2 style="white-space: nowrap;">${podcast}</h2>
         </div>
-        <div class="ro">
-            <h4>${artist}</h4>
+        <div class="row">
+            <h4 style="white-space: nowrap;">${artist}</h4>
         </div>
     </div>
 </div>`
