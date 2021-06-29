@@ -1,25 +1,58 @@
+var results = []
+var currentStart = 0
+
 window.onload = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-    lookup({'id':id, 'media':'podcast', 'entity':'podcastEpisode'})
+
+    $("#next_button").click(() => {
+        $(".card-body").animate({ scrollTop: 0 }, "fast");
+        if (currentStart < results.length + 1) {
+            currentStart += 11
+            console.log(`[NEXT] ${currentStart} -> ${currentStart + 11}`)
+            loadEpisodes(results.slice(currentStart, currentStart + 11))
+        } else {
+            alert("No more results")
+        }   
+    })
+
+    $("#prev_button").click(() => {
+        $(".card-body").animate({ scrollTop: 0 }, "fast");
+        if (currentStart >= 11) {
+            currentStart -= 11
+            console.log(`[PREV] ${currentStart} -> ${currentStart + 11}`)
+            loadEpisodes(results.slice(currentStart, currentStart + 11))
+        } else {
+            alert("No more results")
+        }   
+    })
+
+    lookup({'id':id, 'media':'podcast', 'entity':'podcastEpisode', 'limit':5000})
+    $("#more_button").css('display','initial')
 }
 
 function appleCallback(data) {
-    console.log(data)
-    let results = data.results
-    $(".card-body").empty()
+    //console.log(data)
+    results = data.results
+    //console.log(results)
+    loadEpisodes(results.slice(currentStart, currentStart+11))
+}
 
-    let podcastName = results.shift().collectionName
-    $('#podcast_title').text(podcastName)
-    document.title = podcastName
+function loadEpisodes(episodes) {
+    if (episodes.length > 0) {
+        $(".card-body").empty()
 
-    results.forEach(result => {
-        console.log(result)
-        releaseDate = new Date(result.releaseDate).toLocaleDateString('en-us')
-        title = result.trackName
-        picture = result.artworkUrl160 ? result.artworkUrl160 : "https://via.placeholder.com/150/000000/FFFFFF/?text=Noimagefound"
-        id = result.collectionId
-        html = 
+        let podcastName = episodes.shift().collectionName
+        $('#podcast_title').text(podcastName)
+        document.title = podcastName
+    
+        episodes.forEach(result => {
+            //console.log(result)
+            releaseDate = new Date(result.releaseDate).toLocaleDateString('en-us')
+            title = result.trackName
+            picture = result.artworkUrl160 ? result.artworkUrl160 : "https://via.placeholder.com/150/000000/FFFFFF/?text=Noimagefound"
+            id = result.collectionId
+            html = 
 `<div class="row my-2">
     <div class="col-auto">
         <img src="${picture}" height="100px" width="100px">
@@ -33,8 +66,9 @@ function appleCallback(data) {
         </div>
     </div>
 </div>`
-        $(".card-body").append(html)
-    });
+            $(".card-body").append(html)
+        });
+    }
 }
 /*
     term (REQ): <search term>
