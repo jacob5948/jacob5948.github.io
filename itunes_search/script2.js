@@ -32,6 +32,17 @@ window.onload = () => {
     $("#more_button").css('display','initial')
 }
 
+function loadXMLDoc(dname) {
+    dname += "&callback=test"
+    let s = document.createElement("script");
+    s.src = dname;
+    document.body.appendChild(s);
+}
+
+function test(a) {
+    console.log(a)
+}
+
 function appleCallback(data) {
     //console.log(data)
     results = data.results
