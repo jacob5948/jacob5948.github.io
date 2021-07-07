@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dell UAB IT Asset Tag
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Add a button to the dell pc view page to copy information in asset tag format
 // @author       Jacob Ellis
 // @match        https://www.dell.com/support/home/en-us/product-support/servicetag/*
@@ -72,18 +72,13 @@ ${text}`)}
         };
         info.model = $('#model_number').text();
         info.st = $('.service-tag')[0].innerText.slice(13)
-        //waitForElem($, '#quicklink-sysconfig', () => {
-        //    $('#quicklink-sysconfig').click()
-        //    console.log('get got')
-        //})
+
         let e_viewWarranty = await waitForElem('#quicklink-sysconfig')
         e_viewWarranty.click()
 
-        console.log("SSSSSSSSSSSSSSSSSSSSSSSS")
         let conf_elems = await waitForElem('.card div  span.font-weight-medium.text-jet.pr-4')
         $.each(conf_elems, (i, el) => {
             let text = el.innerText
-            console.log(text)
 
             //CPU
             if (/i[357]/i.test(text)) {
@@ -91,10 +86,10 @@ ${text}`)}
             }
 
             // storage / ram (test for a GB or TB number, could be described a G or T)
-            if (/\d+.?\d+?[MGT]B?/i.test(text)) {
+            if (/\d+(.\d+)?[MGT]B?/i.test(text)) {
                 //get GB or TB number
-                let raw_value_arr = /(\d+).?\d+?([MGT]B?)/i.exec(text)
-                let value = raw_value_arr[1] + raw_value_arr[2].toUpperCase()
+                let raw_value_arr = /(\d+)(.\d+)?([MGT]B?)/i.exec(text)
+                let value = raw_value_arr[1] + raw_value_arr[3].toUpperCase()
                 // as "B" if last letter of storage value is M, G, or T (360G -> 360GB, 1T -> 1TB etc)
                 if (value[value.length - 1] != "B") {
                     value += "B"
@@ -102,7 +97,6 @@ ${text}`)}
                 //RAM (if DDR\d or DIMM found in item)
                 if (/DDR\d|DIMM/i.test(text)) {
                     info.ram = value
-                    console.log("ram")
                     //SSD (if M.2 or NVMe found)
                     //TODO: Make sure SATA ssds are found
                 } else if (/M\.2|NVMe|SSD/i.test(text)) {
