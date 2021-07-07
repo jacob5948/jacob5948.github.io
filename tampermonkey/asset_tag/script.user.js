@@ -8,9 +8,6 @@
 // @icon         https://www.google.com/s2/favicons?domain=dell.com
 // @grant        none
 // ==/UserScript==
-function copyToClipboard(s) {
-    //TODO
-}
 
 (async function($) {
     'use strict';
