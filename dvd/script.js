@@ -142,7 +142,11 @@ var run = async () => {
             t.forward(5);
             await sleep(30);
         }
-    
+
+        var randomColor = Math.floor(Math.random()*16777215).toString(16);
+        $('#box').css('fill', `#${randomColor}`)
+        $('#box').css('stroke', `#${randomColor}`)
+
         t.edgeCorrect();
     
         t.forward(5);
