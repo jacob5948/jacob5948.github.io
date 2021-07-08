@@ -77,8 +77,8 @@ class Tortise {
     }
 
     forward(n) {
-        this.x = this.x + (Math.floor(Math.sin(this.angle * Math.PI / 180) * n));
-        this.y = this.y - (Math.floor(Math.cos(this.angle * Math.PI / 180) * n));
+        this.x = this.x + Math.sin(this.angle * Math.PI / 180) * n;
+        this.y = this.y - Math.cos(this.angle * Math.PI / 180) * n;
     }
 
     moveX(x) {
@@ -87,6 +87,11 @@ class Tortise {
             this.obj.style.left = newX + "px";
             this.x = newX;
         }
+    }
+
+    setColor(c) {
+        this.obj.style.fill = c
+        this.obj.style.stroke = c
     }
 
     atEdge() {
@@ -124,28 +129,27 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-let t = new Tortise($('#box')[0]);
-
-t.bounded = true
-t.center()
-t.angle = 45
-
 window.onload = () => {
     run()
 }
 
 var run = async () => {
-    console.log('run')
+    let t = new Tortise($('#box')[0]);
+    t.setColor('#fff')
+    t.center()
+    t.angle = 30
     while (true) {
-        console.log("do loop")
         while (!t.atEdge()) {
-            t.forward(5);
-            await sleep(30);
+            t.forward(2);
+            await sleep(15);
         }
 
         var randomColor = Math.floor(Math.random()*16777215).toString(16);
-        $('#box').css('fill', `#${randomColor}`)
-        $('#box').css('stroke', `#${randomColor}`)
+        t.setColor('#' + randomColor)
+        //$('#box').css('fill', `#${randomColor}`)
+        //$('#box').css('stroke', `#${randomColor}`)
+
+        t.setColor()
 
         t.edgeCorrect();
     
