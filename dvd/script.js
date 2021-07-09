@@ -96,7 +96,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const fwdAmt = 2;
+const fwdAmt = 3;
 
 window.onload = async () => {
     const logo_div = $('#box')[0]
@@ -107,13 +107,12 @@ window.onload = async () => {
     //t.angle = Math.floor(Math.random() * 360)
     t.angle = 45
     while (true) {
-        while (!t.atEdge()) {
-            t.forward(fwdAmt);
-            await sleep(15);
-        }
-
         var randomColor = Math.floor(Math.random()*16777215).toString(16);
         t.setColor('#' + randomColor)
+        while (!t.atEdge()) {
+            t.forward(fwdAmt);
+            await sleep(20);
+        }
         t.bounce();
         t.forward(fwdAmt)
         
