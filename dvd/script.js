@@ -99,7 +99,9 @@ function sleep(ms) {
 const fwdAmt = 2;
 
 window.onload = async () => {
-    let t = new Tortise($('#box')[0]);
+    const logo_div = $('#box')[0]
+
+    let t = new Tortise(logo_div);
     t.setColor('#fff')
     t.center()
     //t.angle = Math.floor(Math.random() * 360)
