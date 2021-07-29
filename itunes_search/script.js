@@ -2,7 +2,8 @@ window.onload = () => {
     $('#search_btn').click(() => {
         let term = $('#search_term').val()
         if (!(term == '')) {
-            search({"term": term, "entity": "podcast"})
+            console.log("Term: " + term)
+            search(term)
         }
     })
 }
@@ -37,12 +38,13 @@ function appleCallback(data) {
     });
 }
 
-function search(term=undefined, id=undefined, media='podcast', entity='podcast', attribute=undefined, limit=undefined, callback='appleCallback') {
+function search(term, id=undefined, media='podcast', entity='podcast', attribute=undefined, limit=undefined, callback='appleCallback') {
     if (!term & !id) {
         throw Error("search term or id required")
     } else {
         if (term) { 
             let cleanTerm = encodeURIComponent(term).replace(/%20/g, "+")
+            console.log("cleanTerm: " + cleanTerm)
             var url = `https://itunes.apple.com/search?term=${cleanTerm}&country=US`
         } else { 
             if (id) {
