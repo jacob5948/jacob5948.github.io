@@ -81,10 +81,8 @@ class Tortise {
         if (this.atCorner()) { this.angle += 180 }
         else if (this.atEdge) {
             if ((this.angle >= 0 && this.angle < 90) || (this.angle >= 180 && this.angle < 270)) {
-                
                 this.angle += this.atXEdge() ? -90 : 90
             } else if ((this.angle >= 90 && this.angle < 180) || (this.angle >= 270 && this.angle < 360)) {
-                
                 this.angle += this.atXEdge() ? 90 : -90
             }
         }
@@ -103,7 +101,9 @@ window.onload = async () => {
 
     let t = new Tortise(logo_div);
     t.setColor('#fff')
-    t.center()
+    console.log(t.maxX)
+    t.goto(Math.floor(Math.random() * t.maxX), Math.floor(Math.random() * t.maxY))
+    //t.center()
     //t.angle = Math.floor(Math.random() * 360)
     t.angle = 45
     while (true) {

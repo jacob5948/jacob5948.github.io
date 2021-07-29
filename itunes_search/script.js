@@ -29,165 +29,115 @@ function appleCallback(data) {
             <h2 style="white-space: nowrap;">${podcast}</h2>
         </div>
         <div class="row">
-            <h4 style="white-space: nowrap;">${artist}</h4>
+            <h4 style="white-space: nowrap;">${id}</h4>
         </div>
     </div>
 </div>`
         $(".card-body").append(html)
     });
 }
-/*
-    term (REQ): <search term>
-    country (REQ): US
-    id: <collection id, can be used to get podcast episodes given the podcast collection id>
-    media: <type of media to search>
-        - movie, podcast, music, musicVideo, audiobook, shortFile, tvShow, software, ebook, all
-    entity: <based on media type>
-        - movie: movie, movieArtist
-        - podcast: podcast, podcastAuth, podcastEpisode
-        - music: song, musicArtist, musicTrack, album, musicVideo, mix
-        - musicVideo: musicVideo, musicArtist
-        - audiobook: audiobook, audiobookAuthor
-        - shortFilm: shortFile, shortFilmArtist
-        - tvShow: tvEpisode, tvSeason
-        - software: software, iPadSoftware, macSoftware
-        - ebook: ebook
-        - all: movie, album, allArtist, podcast, musicVideo, mix, audiobook, tvSeason, allTrack
-    attribute: <attributes to search for>? might be incorrect...
-        - movie: actorTerm, genreIndex, artistTerm, shortFilmTerm, producerTerm, ratingTerm, directorTerm, releaseYearTerm, featureFilmTerm, movieArtistTerm, movieTerm, ratingIndex, descriptionTerm
-        - podcast: titleTerm, languageTerm, authorTerm, genreIndex, artistTerm, ratingIndex, keywordsTerm, descriptionTerm
-        - music: mixTerm, genreIndex, artistTerm, composerTerm, albumTerm, ratingIndex, songTerm
-        - musicVideo: genreIndex, artistTerm, albumTerm, ratingIndex, songTerm
-        - audiobook: titleTerm, authorTerm, genreIndex, ratingIndex
-        - shortFilm: genreIndex, artistTerm, shortFilmTerm, ratingIndex, descriptionTerm
-        - software: softwareDeveloper
-        - tvShow: genreIndex, tvEpisodeTerm, showTerm, tvSeasonTerm, ratingIndex, descriptionTerm
-        - all: actorTerm, languageTerm, allArtistTerm, tvEpisodeTerm, shortFilmTerm, directorTerm, releaseYearTerm, titleTerm, featureFilmTerm, ratingIndex, keywordsTerm, descriptionTerm, authorTerm, genreIndex, mixTerm, allTrackTerm, artistTerm, composerTerm, tvSeasonTerm, producerTerm, ratingTerm, songTerm, movieArtistTerm, showTerm, movieTerm, albumTerm
-    limit: <# of results to return>
-*/
-function search(query) {
-    if (!query.term & !query.id) {
+
+function search(term=undefined, id=undefined, media='podcast', entity='podcast', attribute=undefined, limit=undefined, callback='appleCallback') {
+    if (!term & !id) {
         throw Error("search term or id required")
     } else {
-        console.log(query.term)
-        if (query.term) { 
-            let cleanTerm = encodeURIComponent(query.term).replace(/%20/g, "+")
-            var url = `https://itunes.apple.com/search?term=${cleanTerm}&country=US&callback=appleCallback`
+        if (term) { 
+            let cleanTerm = encodeURIComponent(term).replace(/%20/g, "+")
+            var url = `https://itunes.apple.com/search?term=${cleanTerm}&country=US`
         } else { 
-            if (query.id) {
-                idValid = /^\d*$/g.test(query.id)
+            if (id) {
+                idValid = /^\d*$/g.test(id)
                 if(!idValid) {
                     throw Error("id value is invalid")
                 } else {
-                    var url = `https://itunes.apple.com/search?id=${query.id}&country=US&callback=appleCallback`
+                    var url = `https://itunes.apple.com/search?id=${id}&country=US`
                 }
             }
         }
 
-        if (query.media) {
-            mediaValid = ['movie', 'podcast', 'music', 'musicVideo', 'audiobook', 'shortFile', 'tvShow', 'software', 'ebook', 'all'].includes(query.media)
+        if (callback) {
+            url += `&callback=${callback}`
+        } else {
+            url += `&callback=appleCallback`
+        }
+
+        if (media) {
+            mediaValid = ['movie', 'podcast', 'music', 'musicVideo', 'audiobook', 'shortFile', 'tvShow', 'software', 'ebook', 'all'].includes(media)
             if (!mediaValid) {
                 throw Error("media value is invalid")
             } else {
-                url += `&media=${query.media}`
+                url += `&media=${media}`
             }
+        } else {
+            url += `&media=${media}`
         }
     
-        if (query.entity) {
-            entityValid = ['movie', 'movieArtistpodcast', 'podcastAuth', 'podcastEpisodesong', 'podcastEpisode', 'musicArtist', 'musicTrack', 'album', 'musicVideo', 'mixmusicVideo', 'musicArtistaudiobook', 'audiobookAuthorshortFile', 'shortFilmArtisttvEpisode', 'tvSeasonsoftware', 'iPadSoftware', 'macSoftwareebookmovie', 'album', 'allArtist', 'podcast', 'musicVideo', 'mix', 'audiobook', 'tvSeason', 'allTrack'].includes(query.entity)
+        if (entity) {
+            entityValid = ['movie', 'movieArtistpodcast', 'podcastAuth', 'podcastEpisodesong', 'podcastEpisode', 'musicArtist', 'musicTrack', 'album', 'musicVideo', 'mixmusicVideo', 'musicArtistaudiobook', 'audiobookAuthorshortFile', 'shortFilmArtisttvEpisode', 'tvSeasonsoftware', 'iPadSoftware', 'macSoftwareebookmovie', 'album', 'allArtist', 'podcast', 'musicVideo', 'mix', 'audiobook', 'tvSeason', 'allTrack'].includes(entity)
             if(!entityValid) {
                 throw Error("entity value is invalid")
             } else {
-                url += `&entity=${query.entity}`
+                url += `&entity=${entity}`
             }
         }
     
-        if (query.attribute) {
-            attributeValid = ['actorTerm', 'genreIndex', 'artistTerm', 'shortFilmTerm', 'producerTerm', 'ratingTerm', 'directorTerm', 'releaseYearTerm', 'featureFilmTerm', 'movieArtistTerm', 'movieTerm', 'ratingIndex', 'descriptionTerm', 'titleTerm', 'languageTerm', 'authorTerm', 'genreIndex', 'artistTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'mixTerm', 'genreIndex', 'artistTerm', 'composerTerm', 'albumTerm', 'ratingIndex', 'songTerm', 'genreIndex', 'artistTerm', 'albumTerm', 'ratingIndex', 'songTerm', 'titleTerm', 'authorTerm', 'genreIndex', 'ratingIndex', 'genreIndex', 'artistTerm', 'shortFilmTerm', 'ratingIndex', 'descriptionTerm', 'softwareDeveloper', 'genreIndex', 'tvEpisodeTerm', 'showTerm', 'tvSeasonTerm', 'ratingIndex', 'descriptionTerm', 'actorTerm', 'languageTerm', 'allArtistTerm', 'tvEpisodeTerm', 'shortFilmTerm', 'directorTerm', 'releaseYearTerm', 'titleTerm', 'featureFilmTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'authorTerm', 'genreIndex', 'mixTerm', 'allTrackTerm', 'artistTerm', 'composerTerm', 'tvSeasonTerm', 'producerTerm', 'ratingTerm', 'songTerm', 'movieArtistTerm', 'showTerm', 'movieTerm', 'albumTerm'].includes(query.attribute)
+        if (attribute) {
+            attributeValid = ['actorTerm', 'genreIndex', 'artistTerm', 'shortFilmTerm', 'producerTerm', 'ratingTerm', 'directorTerm', 'releaseYearTerm', 'featureFilmTerm', 'movieArtistTerm', 'movieTerm', 'ratingIndex', 'descriptionTerm', 'titleTerm', 'languageTerm', 'authorTerm', 'genreIndex', 'artistTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'mixTerm', 'genreIndex', 'artistTerm', 'composerTerm', 'albumTerm', 'ratingIndex', 'songTerm', 'genreIndex', 'artistTerm', 'albumTerm', 'ratingIndex', 'songTerm', 'titleTerm', 'authorTerm', 'genreIndex', 'ratingIndex', 'genreIndex', 'artistTerm', 'shortFilmTerm', 'ratingIndex', 'descriptionTerm', 'softwareDeveloper', 'genreIndex', 'tvEpisodeTerm', 'showTerm', 'tvSeasonTerm', 'ratingIndex', 'descriptionTerm', 'actorTerm', 'languageTerm', 'allArtistTerm', 'tvEpisodeTerm', 'shortFilmTerm', 'directorTerm', 'releaseYearTerm', 'titleTerm', 'featureFilmTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'authorTerm', 'genreIndex', 'mixTerm', 'allTrackTerm', 'artistTerm', 'composerTerm', 'tvSeasonTerm', 'producerTerm', 'ratingTerm', 'songTerm', 'movieArtistTerm', 'showTerm', 'movieTerm', 'albumTerm'].includes(attribute)
             if (!attributeValid) {
                 throw Error("attribute value is invalid")
             } else {
-                url += `&attribute=${query.attribute}`
+                url += `&attribute=${attribute}`
             }
         }
     
-        if(query.limit) {
-            limitValid = query.limit > 0 && Number.isInteger(query.limit)
+        if(limit) {
+            limitValid = limit > 0 && Number.isInteger(limit)
             if (!limitValid) {
                 throw Error("limit value is invalid")
             } else {
-                url += `&limit=${query.limit}`
+                url += `&limit=${limit}`
             }
         }
-    
-        console.log(url);
-    
+        
         let s = document.createElement("script");
         s.src = url;
         document.body.appendChild(s);
     }
 }
 
-function lookup(query) {
-    if (!query.id) {
+function lookup(id, media = 'podcast', entity = 'podcastEpisode', attribute = undefined, limit = undefined, callback = 'appleCallback') {
+    if (!id) {
         throw Error("lookup id required")
     } else {
-        idValid = /^\d*$/g.test(query.id)
+        idValid = /^\d*$/g.test(id)
         if(!idValid) {
             throw Error("id value is invalid")
         } else {
-            var url = `https://itunes.apple.com/lookup?id=${query.id}&country=US&callback=appleCallback`
+            var url = `https://itunes.apple.com/lookup?id=${id}&country=US`
 
-            if (query.media) {
-                mediaValid = ['movie', 'podcast', 'music', 'musicVideo', 'audiobook', 'shortFile', 'tvShow', 'software', 'ebook', 'all'].includes(query.media)
-                if (!mediaValid) {
-                    throw Error("media value is invalid")
-                } else {
-                    url += `&media=${query.media}`
-                }
+            if (media) {
+                mediaValid = ['movie', 'podcast', 'music', 'musicVideo', 'audiobook', 'shortFile', 'tvShow', 'software', 'ebook', 'all'].includes(media)
+                if (!mediaValid) { throw Error("media value is invalid") } else { url += `&media=${media}` }
             }
         
-            if (query.entity) {
-                entityValid = ['movie', 'movieArtistpodcast', 'podcastAuth', 'podcastEpisodesong', 'podcastEpisode', 'musicArtist', 'musicTrack', 'album', 'musicVideo', 'mixmusicVideo', 'musicArtistaudiobook', 'audiobookAuthorshortFile', 'shortFilmArtisttvEpisode', 'tvSeasonsoftware', 'iPadSoftware', 'macSoftwareebookmovie', 'album', 'allArtist', 'podcast', 'musicVideo', 'mix', 'audiobook', 'tvSeason', 'allTrack'].includes(query.entity)
-                if(!entityValid) {
-                    throw Error("entity value is invalid")
-                } else {
-                    url += `&entity=${query.entity}`
-                }
+            if (entity) {
+                entityValid = ['movie', 'movieArtistpodcast', 'podcastAuth', 'podcastEpisodesong', 'podcastEpisode', 'musicArtist', 'musicTrack', 'album', 'musicVideo', 'mixmusicVideo', 'musicArtistaudiobook', 'audiobookAuthorshortFile', 'shortFilmArtisttvEpisode', 'tvSeasonsoftware', 'iPadSoftware', 'macSoftwareebookmovie', 'album', 'allArtist', 'podcast', 'musicVideo', 'mix', 'audiobook', 'tvSeason', 'allTrack'].includes(entity)
+                if(!entityValid) { throw Error("entity value is invalid") } else { url += `&entity=${entity}` }
             }
         
-            if (query.attribute) {
-                attributeValid = ['actorTerm', 'genreIndex', 'artistTerm', 'shortFilmTerm', 'producerTerm', 'ratingTerm', 'directorTerm', 'releaseYearTerm', 'featureFilmTerm', 'movieArtistTerm', 'movieTerm', 'ratingIndex', 'descriptionTerm', 'titleTerm', 'languageTerm', 'authorTerm', 'genreIndex', 'artistTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'mixTerm', 'genreIndex', 'artistTerm', 'composerTerm', 'albumTerm', 'ratingIndex', 'songTerm', 'genreIndex', 'artistTerm', 'albumTerm', 'ratingIndex', 'songTerm', 'titleTerm', 'authorTerm', 'genreIndex', 'ratingIndex', 'genreIndex', 'artistTerm', 'shortFilmTerm', 'ratingIndex', 'descriptionTerm', 'softwareDeveloper', 'genreIndex', 'tvEpisodeTerm', 'showTerm', 'tvSeasonTerm', 'ratingIndex', 'descriptionTerm', 'actorTerm', 'languageTerm', 'allArtistTerm', 'tvEpisodeTerm', 'shortFilmTerm', 'directorTerm', 'releaseYearTerm', 'titleTerm', 'featureFilmTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'authorTerm', 'genreIndex', 'mixTerm', 'allTrackTerm', 'artistTerm', 'composerTerm', 'tvSeasonTerm', 'producerTerm', 'ratingTerm', 'songTerm', 'movieArtistTerm', 'showTerm', 'movieTerm', 'albumTerm'].includes(query.attribute)
-                if (!attributeValid) {
-                    throw Error("attribute value is invalid")
-                } else {
-                    url += `&attribute=${query.attribute}`
-                }
+            if (attribute) {
+                attributeValid = ['actorTerm', 'genreIndex', 'artistTerm', 'shortFilmTerm', 'producerTerm', 'ratingTerm', 'directorTerm', 'releaseYearTerm', 'featureFilmTerm', 'movieArtistTerm', 'movieTerm', 'ratingIndex', 'descriptionTerm', 'titleTerm', 'languageTerm', 'authorTerm', 'genreIndex', 'artistTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'mixTerm', 'genreIndex', 'artistTerm', 'composerTerm', 'albumTerm', 'ratingIndex', 'songTerm', 'genreIndex', 'artistTerm', 'albumTerm', 'ratingIndex', 'songTerm', 'titleTerm', 'authorTerm', 'genreIndex', 'ratingIndex', 'genreIndex', 'artistTerm', 'shortFilmTerm', 'ratingIndex', 'descriptionTerm', 'softwareDeveloper', 'genreIndex', 'tvEpisodeTerm', 'showTerm', 'tvSeasonTerm', 'ratingIndex', 'descriptionTerm', 'actorTerm', 'languageTerm', 'allArtistTerm', 'tvEpisodeTerm', 'shortFilmTerm', 'directorTerm', 'releaseYearTerm', 'titleTerm', 'featureFilmTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'authorTerm', 'genreIndex', 'mixTerm', 'allTrackTerm', 'artistTerm', 'composerTerm', 'tvSeasonTerm', 'producerTerm', 'ratingTerm', 'songTerm', 'movieArtistTerm', 'showTerm', 'movieTerm', 'albumTerm'].includes(attribute)
+                if (!attributeValid) { throw Error("attribute value is invalid") } else { url += `&attribute=${attribute}` }
             }
         
-            if(query.limit) {
-                limitValid = query.limit > 0 && Number.isInteger(query.limit)
-                if (!limitValid) {
-                    throw Error("limit value is invalid")
-                } else {
-                    url += `&limit=${query.limit}`
-                }
+            if(limit) {
+                limitValid = limit > 0 && Number.isInteger(limit)
+                if (!limitValid) { throw Error("limit value is invalid") } else { url += `&limit=${limit}` }
             }
-        
-            console.log(url);
-        
+
             let s = document.createElement("script");
             s.src = url;
             document.body.appendChild(s);
         }
     }
 }
-
-//fetch("https://itunes.apple.com/search?term=mystery&limit=200&country=US&lan=en_us&entity=podcastEpisode")
-//.then(response => {
-//    return response.json()
-//})
-//.then(results => {
-//    console.log(results)
-//})
-//console.log("world")
