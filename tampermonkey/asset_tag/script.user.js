@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dell UAB IT Asset Tag
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  Add a button to the dell pc view page to copy information in asset tag format
 // @author       Jacob Ellis
 // @match        https://www.dell.com/support/home/en-us/product-support/servicetag/*
@@ -85,8 +85,8 @@ ${text}`)}
             console.log(`Processing row: ${text}`)
 
             //CPU
-            if (/i[357]/i.test(text)) {
-                info.cpu = /i[357]/i.exec(text)[0].toLowerCase()
+            if (/i[3579]/i.test(text)) {
+                info.cpu = /i[3579]/i.exec(text)[0].toLowerCase()
                 console.log(`Detected CPU: ${info.cpu}`)
             // storage / ram (test for a GB or TB number, could be described a G or T)
             } else if (/\d+(\.\d+)?[MGT]B?/i.test(text)) {
