@@ -17,7 +17,7 @@ function getInfo() {
     } else {
         console.log("running")
         let request = new XMLHttpRequest();
-        request.open('GET', `http://50.116.33.115:5000/get/${st}`)
+        request.open('GET', `https://50.116.33.115:5000/get/${st}`)
         request.send();
         loading()
         request.on
