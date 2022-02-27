@@ -24,7 +24,19 @@ function getInfo() {
         request.onload = () => {
             stopLoading()
             if (request.status == 200) {
-                $("#result").text(request.response)
+                let info = JSON.parse(request.response)
+                let output = `System Manufacturer: Dell
+System Model: ${info.model}
+Processor: ${info.cpu}
+RAM: ${info.ram}
+Drive Space and Type: ${info.storage}
+System Service Tag/Serial Number: ${info.st}
+Year Manufactured: ${info.mfg_date}
+Screen size: ${info.screen}
+
+User's Blazer ID: < ENTER USER'S BLAZER ID >
+If non standard system, enter notes here:`
+                $("#result").text(output)
                 //document.getElementById('result').value = request.response
             } else if (request.status == 403) {
                 $("#result").text("Access denied, make sure you are on VPN or on UAB network")
