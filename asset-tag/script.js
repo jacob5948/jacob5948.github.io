@@ -1,5 +1,11 @@
+let isLoading = false;
+
 window.onload = () => {
     $('#run_btn').on('click', getInfo)
+    $('#serviceTagEntry').submit(function () {
+        if (!isLoading) getInfo();
+        return false;
+    });
     let warning = document.getElementById('warning')
 }
 
@@ -49,9 +55,11 @@ If non standard system, enter notes here:`
 }
 
 function loading() {
+    isLoading = true;
     $('#run_btn').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>  Loading...').addClass('disabled');
 }
 
 function stopLoading() {
+    isLoading = false;
     $('#run_btn').html('Run').removeClass('disabled')
 }
