@@ -11,7 +11,7 @@ function getInfo() {
     $("#result_card").css('display', 'none')
     //TODO: check warning design
 
-    if (!/.*\b[A-Z\d]{7}\b.*/.test(st)) {
+    if (!/[A-Z\d]{7}/.test(st)) {
         warning.style.display = "initial"
         warning.innerHTML = "Invalid Service Tag format"
     } else {
