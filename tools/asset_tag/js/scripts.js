@@ -1,4 +1,5 @@
 let isLoading = false;
+var warning;
 
 window.onload = () => {
     $('#run_btn').on('click', getInfo)
@@ -6,7 +7,7 @@ window.onload = () => {
         if (!isLoading) getInfo();
         return false;
     });
-    let warning = document.getElementById('warning')
+    warning = document.getElementById('warning')
 }
 
 function getInfo() {
@@ -14,16 +15,16 @@ function getInfo() {
     
     warning.style.display = "none"
     warning.innerHTML = "Error"
-    $("#result_card").css('display', 'none')
+    hideText()
+    
     //TODO: check warning design
-
     if (!/[A-Z\d]{7}/.test(st)) {
         warning.style.display = "initial"
         warning.innerHTML = "Invalid Service Tag format"
     } else {
         console.log("running")
         let request = new XMLHttpRequest();
-        request.open('GET', `https://api.iamnotstin.me:5000/get/${st}`)
+        request.open('GET', `https://api.iamnotstin.me/get/${st}`)
         request.send();
         loading()
         request.on
@@ -31,25 +32,29 @@ function getInfo() {
             stopLoading()
             if (request.status == 200) {
                 let info = JSON.parse(request.response)
-                let output = `System Manufacturer: Dell
-System Model: ${info.model}
-Processor: ${info.cpu}
-RAM: ${info.ram}
-Drive Space and Type: ${info.storage}
-System Service Tag/Serial Number: ${info.st}
-Year Manufactured: ${info.mfg_date}
-Screen size: ${info.screen}
-
-User's Blazer ID: < ENTER USER'S BLAZER ID >
+                let output = `System Manufacturer: Dell<br>
+System Model: ${info.model}<br>
+Processor: ${info.cpu}<br>
+RAM: ${info.ram}<br>
+Drive Space and Type: ${info.storage}<br>
+System Service Tag/Serial Number: ${info.st}<br>
+Year Manufactured: ${info.mfg_date}<br>
+Screen size: ${info.screen}<br>
+<br>
+User's Blazer ID: < ENTER USER'S BLAZER ID ><br>
 If non standard system, enter notes here:`
-                $("#result").text(output)
+                showText(output)
                 //document.getElementById('result').value = request.response
             } else if (request.status == 403) {
-                $("#result").text("Access denied, make sure you are on VPN or on UAB network")
+                showText("Access denied, make sure you are on VPN or on UAB network")
             } else {
-                $("#result").text(`An error occurred :(`)
+                showText("An error occurred :(")
             }
             $("#result_card").css('display', 'flex')
+        }
+        request.onerror = () => {
+            stopLoading()
+            showText("An error occurred :(")
         }
     }
 }
@@ -62,4 +67,14 @@ function loading() {
 function stopLoading() {
     isLoading = false;
     $('#run_btn').html('Run').removeClass('disabled')
+}
+
+function showText(text) {
+    $("#result").html(text)
+    $("#result_card").css('display', 'flex')
+}
+
+function hideText() {
+    $("#result").html("")
+    $("#result_card").css('display', 'none')
 }
